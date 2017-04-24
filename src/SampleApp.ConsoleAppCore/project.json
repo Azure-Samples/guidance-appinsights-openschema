@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "emitEntryPoint": true
+  },
+
+  "dependencies": {
+    "Microsoft.AzureCAT.AppInsights.Core": "1.0.0-*",
+    "Microsoft.AzureCAT.AppInsights.Provider": "1.0.0-*",
+    "Microsoft.AzureCAT.AppInsights.Sink.AggregatedMetric": "1.0.0-*",
+    "Microsoft.AzureCAT.AppInsights.Sink.Blob": "1.0.0-*",
+    "Microsoft.AzureCAT.AppInsights.Sink.ElasticSearch": "1.0.0-*",
+    "Microsoft.AzureCAT.AppInsights.Sink.Graphite": "1.0.0-*",
+    "Microsoft.AzureCAT.Logging.Core": "1.0.0-*",
+    "Microsoft.Extensions.DependencyInjection": "1.1.0",
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.1.0"
+    },
+    "Sample.OpenSchemas": "1.0.0-*"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dnxcore50",
+        "portable-net45+win8"
+      ],
+      "dependencies": {
+      },
+      "net461": {}
+    }
+  }
+}

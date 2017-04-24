@@ -1,0 +1,36 @@
+{
+	"version": "1.0.0-*",
+
+    "dependencies": {
+        "Microsoft.AzureCAT.Logging.Core": "1.0.0-*",
+        "Microsoft.AzureCAT.Logging.Pipeline": "1.0.0-*",
+        "Microsoft.Extensions.Configuration.Abstractions": "1.1.1",
+        "Microsoft.Extensions.Configuration.Binder": "1.1.1",
+        "Microsoft.Extensions.Logging": "1.1.1",
+        "NETStandard.Library": "1.6.1",
+        "System.Threading.Tasks.Dataflow": "4.7.0"
+    },
+
+	"frameworks": {
+		"netstandard1.6": {
+			"imports": "dnxcore50"
+		},
+		"net461": {}
+	},
+
+	"authors": [ "Microsoft" ],
+	"copyright": "© Microsoft Corporation. All rights reserved.",
+	"description": "OpenSchema",
+	"packOptions": {
+		"projectUrl": "https://github.com/xxxxxx",
+		"summary": "Microsoft.AzureCAT for Microsoft OpenSchema",
+		"tags": [
+			"Microsoft",
+			"Diagnostics",
+			"MicrosoftLogging",
+			"OpenSchema"
+		],
+		"licenseUrl": "https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm",
+		"requireLicenseAcceptance": true
+	}
+}
