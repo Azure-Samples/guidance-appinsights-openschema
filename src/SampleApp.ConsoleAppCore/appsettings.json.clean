@@ -1,0 +1,137 @@
+{
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": { // For Local internal logger only
+      "Console": "Debug",
+      "LocalTraceFile": "None"
+    }
+  },
+  "ApplicationInsights": {
+    "InstrumentationKey": "{{Secret:AIInstrumentationKey}}",
+    "TelemetryServiceEndpoint": "https://dc.services.visualstudio.com/v2/track",
+
+    "InMemoryPublishingChannel": {
+      "maxBacklog": 1000,
+      "maxWindowCount": 500,
+      "windowSize": "00:00:15"
+    },
+
+    "LogLevel": { // For ILogger implementation, ConfigureLogger() or ConfigureLogger() with category name
+      "Default": "Information",
+      "SampleAppCore": "Information"
+    },
+
+    // ITelemetryInitializer Assemblies added to TelemetryConfiguration.Active.TelemetryInitializers
+    "TelemetryInitializer": [
+      {
+        "name": "ConfigurationEnrichment",
+        "classAssembly": "Microsoft.AzureCAT.AppInsights.EnrichmentTelemetryInitializerFactory, Microsoft.AzureCAT.AppInsights.EnrichmentInitializer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "enrichmentProperties": {
+          "MachineRole": "SampleApp.Test",
+          "Environment": "local-dev"
+        }
+      }
+    ],
+
+    // IPopulateTelemetry Assemblies called by ILogger.Log<TState>
+    "PopulateTelemetry": [
+      {
+        "name": "PopulateTelemetry",
+        "classAssembly": "Sample.OpenSchemas.PopulateTelemetry, Sample.OpenSchemas"
+      }
+    ],
+
+    // TelemetryProcessorSinks are added to the ITelemetryProcessor pipeline, TelemetryProcessorChainBuilder.Use()
+    "TelemetryProcessorSinks": [
+      {
+        "name": "AggMetrics",
+        "classAssembly": "Microsoft.AzureCAT.AppInsights.AppInsightAggMetricSinkFactory, Microsoft.AzureCAT.AppInsights.Sink.AggregatedMetric, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "maxBacklog": 10000,
+        "maxWindowCount": 1000,
+        "windowSize": "00:00:15"
+      },
+      {
+        "name": "graphite",
+        "classAssembly": "Microsoft.AzureCAT.AppInsights.AppInsightGraphiteSinkFactory, Microsoft.AzureCAT.AppInsights.Sink.Graphite, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "server": "{{Secret:GraphiteServer}}",
+        "port": 2003,
+        "maxBacklog": 1000,
+        "maxWindowCount": 1000,
+        "windowSize": "00:00:05",
+        "EventTelemetryProperties": [
+          "Environment",
+          "MachineRole",
+          "MachineName"
+        ]
+      },
+      {
+        "name": "elasticsearch",
+        "classAssembly": "Microsoft.AzureCAT.AppInsights.AppInsightElasticSearchSinkFactory, Microsoft.AzureCAT.AppInsights.Sink.ElasticSearch, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "indexnamebase": "{{Secret:ElasticSearchIndexBase}}",
+        "elasticsearchurl": "{{Secret:ElasticSearchUrl}}",
+        "port": 9201,
+        "username": "{{Secret:ElasticSearchUsername}}",
+        "password": "{{Secret:ElasticSearchPassword}}",
+        "maxBacklog": 1000,
+        "maxWindowCount": 1000,
+        "windowSize": "00:00:15",
+        // Provide an ITransformOutput from EventTelemtry to custom ElasticSearch JSON format
+        "TransformOutput": {
+          "name": "ElasticSearch",
+          "classAssembly": "Sample.OpenSchemas.ElasticSearchSinkToOpenSchema, Sample.OpenSchemas"
+        }
+      },
+      {
+        "name": "OpenSchema",
+        "classAssembly": "Microsoft.AzureCAT.AppInsights.AppInsightBlobSinkFactory, Microsoft.AzureCAT.AppInsights.Sink.Blob, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "InstrumentationKey": "{{Secret:AIInstrumentationKey}}",
+
+        "BlobNotificationEndpoint": "https://dc.services.visualstudio.com/v2/track",
+
+        "BlobPublisher": {
+          "StorageAccounts": [
+            "DefaultEndpointsProtocol=https;AccountName={{Secret:BlobPublisherStorageAccountName1}};AccountKey={{Secret:BlobPublisherStorageAccountkey1}}"
+          ],
+          "BaseContainerName": "{{Secret:BaseContainerName}}"
+        },
+
+        "BatchBuffer": {
+          "maxBacklog": 10000,
+          "maxWindowCount": 1000,
+          "windowSize": "00:00:15"
+        },
+
+        "BlobSinkBuffer": {
+          "memoryBufferBytes": 20485760,
+          "bufferFlush": "00:00:05",
+          "useGzip": true
+        },
+
+        // For each OpenSchemaId data source, provide an ITransformOutput from EventTelemtry to custom OpenSchema
+        "SchemaIdList": {
+          "LogOpenSchema": {
+            "Id": "{{Secret:LogOpenSchemaId}}",
+            "TransformOutput": {
+              "name": "LogOpenSchema",
+              "classAssembly": "Sample.OpenSchemas.BlobSinkToOpenSchema, Sample.OpenSchemas"
+            }
+          },
+          "TimedOperationOpenSchema": {
+            "Id": "{{Secret:TimedOperationOpenSchemaId}}",
+            "TransformOutput": {
+              "name": "TimedOperationOpenSchema",
+              "classAssembly": "Sample.OpenSchemas.BlobSinkToOpenSchema, Sample.OpenSchemas"
+            }
+          },
+          "ExceptionsOpenSchema": {
+            "Id": "{{Secret:ExceptionsOpenSchemaId}}",
+            "TransformOutput": {
+              "name": "ExceptionsOpenSchema",
+              "classAssembly": "Sample.OpenSchemas.BlobSinkToOpenSchema, Sample.OpenSchemas"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
