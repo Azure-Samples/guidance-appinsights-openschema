@@ -2,7 +2,7 @@
 services: application-insights
 platforms: dotnet
 author: michthub
-date: April, 2017
+date: May, 2017
 ---
 
 # Application Insights Analytics with OpenSchema
