@@ -38,15 +38,15 @@ namespace Microsoft.AzureCAT.AppInsights
                         // proprties dictionary                     
                         Metrics = new Dictionary<string, double>()
                         {
-                            {MetricProps.Avg, e.Average(t => t.Value)},
-                            {MetricProps.Min, e.Min(t => t.Value)},
-                            {MetricProps.Max, e.Max(t => t.Value)},
+                            {MetricProps.Avg, e.Average(t => t.Sum)},
+                            {MetricProps.Min, e.Min(t => t.Sum)},
+                            {MetricProps.Max, e.Max(t => t.Sum)},
                             {MetricProps.Count, e.Count()},
-                            {MetricProps.StdDev, e.Select(t => t.Value).StandardDeviation()},
-                            {MetricProps.P50, e.Select(t => t.Value).Percentile(50)},
-                            {MetricProps.P90, e.Select(t => t.Value).Percentile(90)},
-                            {MetricProps.P95, e.Select(t => t.Value).Percentile(95)},
-                            {MetricProps.P99, e.Select(t => t.Value).Percentile(99)}
+                            {MetricProps.StdDev, e.Select(t => t.Sum).StandardDeviation()},
+                            {MetricProps.P50, e.Select(t => t.Sum).Percentile(50)},
+                            {MetricProps.P90, e.Select(t => t.Sum).Percentile(90)},
+                            {MetricProps.P95, e.Select(t => t.Sum).Percentile(95)},
+                            {MetricProps.P99, e.Select(t => t.Sum).Percentile(99)}
                         }
                     })
                 .Select(e => e.Merge());
@@ -71,11 +71,11 @@ namespace Microsoft.AzureCAT.AppInsights
                         {
                             Name = e.Key.Name,
                             Timestamp = e.Min(t => t.Timestamp),
-                            Value = e.Average(t => t.Value),
-                            Min = e.Min(t => t.Value),
-                            Max = e.Max(t => t.Value),
+                            Sum = e.Average(t => t.Sum),
+                            Min = e.Min(t => t.Sum),
+                            Max = e.Max(t => t.Sum),
                             Count = e.Count(),
-                            StandardDeviation = e.Select(t => t.Value).StandardDeviation()
+                            StandardDeviation = e.Select(t => t.Sum).StandardDeviation()
                         },
                         // Copy properties
                         Properties = new Dictionary<string, string>(e.FirstOrDefault().Properties),
@@ -84,15 +84,15 @@ namespace Microsoft.AzureCAT.AppInsights
                         // proprties dictionary                     
                         CustomMetrics = new Dictionary<string, double>()
                         {
-                            {MetricProps.Avg, e.Average(t => t.Value)},
-                            {MetricProps.Min, e.Min(t => t.Value)},
-                            {MetricProps.Max, e.Max(t => t.Value)},
+                            {MetricProps.Avg, e.Average(t => t.Sum)},
+                            {MetricProps.Min, e.Min(t => t.Sum)},
+                            {MetricProps.Max, e.Max(t => t.Sum)},
                             {MetricProps.Count, e.Count()},
-                            {MetricProps.StdDev, e.Select(t => t.Value).StandardDeviation()},
-                            {MetricProps.P50, e.Select(t => t.Value).Percentile(50)},
-                            {MetricProps.P90, e.Select(t => t.Value).Percentile(90)},
-                            {MetricProps.P95, e.Select(t => t.Value).Percentile(95)},
-                            {MetricProps.P99, e.Select(t => t.Value).Percentile(99)}
+                            {MetricProps.StdDev, e.Select(t => t.Sum).StandardDeviation()},
+                            {MetricProps.P50, e.Select(t => t.Sum).Percentile(50)},
+                            {MetricProps.P90, e.Select(t => t.Sum).Percentile(90)},
+                            {MetricProps.P95, e.Select(t => t.Sum).Percentile(95)},
+                            {MetricProps.P99, e.Select(t => t.Sum).Percentile(99)}
                         }
                     })
                 .Select(e => e.Merge());
