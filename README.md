@@ -13,26 +13,26 @@ The Visual Studio solution provides two sample console applications.
 1. SampleApp.ConsoleAppCore: .NET Core App
 2. SampleApp.ConsoleApp: .NET Framework App
 
-Both console apps reference the Sample.OpenSchemas assembly which shows how to implement custom schemas with Application Insights OpenSchema and leverage the custom extensions in the Microsoft.AzureCAT namespaces.
+Both console apps reference the `Sample.OpenSchemas` assembly, which shows how to implement custom schemas with Application Insights OpenSchema and leverage the custom extensions in the `Microsoft.AzureCAT` namespaces.
 
 ## Building the sample
-- The solution is built with Visual Studio 2015 and requires the .NET Core SDK. Modify global.json for the version you install.
-- Open the .sln solution file in Visual Studio 2015.
-- Select configuraiton solution platform of x64, not All CPU.
+- The solution is built with Visual Studio 2015 and requires the .NET Core SDK. Modify `global.json` for the version you install.
+- Open the `.sln` solution file in Visual Studio 2015.
+- Select configuration solution platform of `x64`, not `Any CPU`.
 - Build All.
-- If the SampleApp.ConsoleApp errors, just Build again to get it to resolve assemblies. This is a known issue with combined use of .xproj and .csproj. If references need to be updated, the .csproj will have to be manually edited when referencing any .xproj.
-- Copy the appsettings.json.clean to appsettings.json, then replace each {{Secret-Key}} with your values. Specifying these values assumes you have created an Application Insights application which will give you an Instrumentation Key.
+- If the `SampleApp.ConsoleApp` build with errors, just Build again to get it to resolve assemblies. This is a known issue with combined use of `.xproj` and `.csproj`. If references need to be updated, the `.csproj` will have to be manually edited when referencing any `.xproj`.
+- Copy the `appsettings.json.clean` to `appsettings.json`, then replace each `{{Secret-Key}}` with your values. Specifying these values assumes you have created an Application Insights application which gives you an Instrumentation Key.
 - See below for further [Configuration](#configuration) details.
 
 ## Microsoft.Extensions.Logging - ILogger
 Logging uses the Microsoft logging extensions to provide the base logging functionality, we add additional custom logging extensions to populate our event telemetry objects, and then pass them into the custom pipeline built with the Application Insights Client SDK.
-See either Program.cs in SampleApp.ConsoleAppCore or SampleApp.ConsoleApp project to create and use an ILogger.
+See either `Program.cs` in `SampleApp.ConsoleAppCore` or `SampleApp.ConsoleApp` project to create and use an `ILogger`.
 
 ## Application Insights pipeline customization
 The sample implements a custom pipeline that extends the standard Applications Insights Client SDK.  The custom pipeline includes enrichment properties to the event object and adds the following processor sinks to support the following target services:
 - Application Insights for Aggregated Metrics 
 - Application Insights OpenSchema custom schemas (LogOpenSchema, ExceptionsOpenSchema, TimedOperationOpenSchema)
-- Elasticsearch uses the custom schemas (LogOpenSchema, ExceptionsOpenSchema but not TimedOperationOpenSchema))
+- Elasticsearch uses the custom schemas (LogOpenSchema, ExceptionsOpenSchema but not TimedOperationOpenSchema)
 - Graphite for Aggregated Metrics
 
 ## Query and Analytics
@@ -44,7 +44,7 @@ To view the events written to the above target services use:
 - Graphite uses Grafana to view events
 
 ## Configuration
-An appsettings.json file is required for each application. Replace these values with yours in the sections for [ApplicationInsights](#applicationinsights) and [TelemetryProcessorSinks](#telemetryprocessorsinks).
+An `appsettings.json` file is required for each application. Replace these values with yours in the sections for [ApplicationInsights](#applicationinsights) and [TelemetryProcessorSinks](#telemetryprocessorsinks).
 
 ### ApplicationInsights
 ```json
@@ -293,10 +293,11 @@ For each custom OpenSchema (LogOpenSchema, TimedOperationOpenSchema, ExceptionsO
 
 ## References
 Using this samples assumes you are familiar with the general topics of monitoring, diagnostics, and analytics for Azure applications:
-- [Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-overview/)
-- [Analytics in Application Insights](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-analytics/)
-- [Application Insights Analytics is notified to import](https://docs.microsoft.com/en-us/azure/application-insights/app-insights-analytics-import/)
-- [Patterns and practices: Monitoring and diagnostics guidance](https://docs.microsoft.com/en-us/azure/best-practices-monitoring/)
+- [Application Insights](https://docs.microsoft.com/azure/application-insights/app-insights-overview/)
+- [Analytics in Application Insights](https://docs.microsoft.com/azure/application-insights/app-insights-analytics/)
+- [Application Insights Analytics is notified to import](https://docs.microsoft.com/azure/application-insights/app-insights-analytics-import/)
+- [Patterns and practices: Monitoring and diagnostics guidance](https://docs.microsoft.com/azure/best-practices-monitoring/)
+- [Blog post with details of this sample](https://blogs.msdn.microsoft.com/azurecat/2017/05/11/azure-monitoring-and-analytics-at-scale/)
 
 ## MSFT OSS Code Of Conduct Notice
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
