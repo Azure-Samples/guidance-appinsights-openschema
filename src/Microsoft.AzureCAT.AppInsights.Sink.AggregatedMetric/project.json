@@ -1,8 +1,8 @@
-﻿{
+{
   "version": "1.0.0-*",
 
 	"dependencies": {
-		"Microsoft.ApplicationInsights": "2.2.0",
+    "Microsoft.ApplicationInsights": "2.4.0",
 		"Microsoft.AzureCAT.AppInsights.Core": "1.0.0-*",
 		"Microsoft.AzureCAT.Logging.Core": "1.0.0-*",
 		"Microsoft.AzureCAT.Logging.Pipeline": "1.0.0-*",

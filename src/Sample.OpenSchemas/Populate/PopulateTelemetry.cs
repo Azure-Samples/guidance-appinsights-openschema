@@ -88,7 +88,7 @@ namespace Sample.OpenSchemas
                 var metric = state as MetricModel;
 				var metricModel = telemetryItem as MetricTelemetry;
 				metricModel.Name = metric.Name;
-				metricModel.Value = metric.Value;
+				metricModel.Sum = metric.Value;
 				telemetryItem.Timestamp = DateTimeOffset.UtcNow;
 				// Bypass AI Client SDK Pipeline
 				telemetryProperties.Properties.Add(CoreConstants.CustomPipelineKey, "true");
